@@ -61,6 +61,12 @@ class TomatoApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
+      theme: ThemeData(
+          primarySwatch: Colors.red,
+          fontFamily: 'DoHyeon',
+          textTheme: TextTheme(
+              headline3: TextStyle(fontFamily: 'DoHyeon'),
+              button: TextStyle(color: Colors.white))),
       //beamer가 알아서 route 주소를 읽어서 사용자에게 어떤 스크린을 보여줄지 정하는 것
       routeInformationParser: BeamerParser(),
       //routerDelegate : beamer에게 여기로 보내줘 하면 알아서 가게끔 하는 것
