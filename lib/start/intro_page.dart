@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:gidong_market/utils/logger.dart';
 
 class IntroPage extends StatelessWidget {
-  const IntroPage({Key? key}) : super(key: key);
+  PageController controller;
+  IntroPage(this.controller, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    //화면사이즈가 바뀔 때 마다 layoutbuilder가 각각의 위젯을 다시 리빌드를 해준다.
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints) {
         Size size = MediaQuery.of(context).size;
@@ -76,6 +78,11 @@ class IntroPage extends StatelessWidget {
   }
 
   void onButtonClick() {
+    controller.animateToPage(
+      1,
+      duration: Duration(milliseconds: 500),
+      curve: Curves.ease,
+    );
     loggar.d('on text BUtton clicked!!');
   }
 }

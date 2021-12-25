@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     //원래는 <Object> 자리에 받아와야 할 값의 타입을 적어 놓는다. 예를들면 string이다 하면 <String>이런식으로
     return FutureBuilder<Object>(
-      future: Future.delayed(Duration(seconds: 3), () => 100),
+      future: Future.delayed(Duration(milliseconds: 300), () => 100),
       //future가 snapshot에 저장이 됌
       builder: (context, snapshot) {
         return AnimatedSwitcher(
@@ -64,6 +64,7 @@ class TomatoApp extends StatelessWidget {
       theme: ThemeData(
           primarySwatch: Colors.red,
           fontFamily: 'DoHyeon',
+          hintColor: Colors.grey[300],
           textTheme: TextTheme(
               headline3: TextStyle(fontFamily: 'DoHyeon'),
               button: TextStyle(color: Colors.white))),
