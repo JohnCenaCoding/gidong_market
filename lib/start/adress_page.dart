@@ -5,6 +5,7 @@ import 'package:gidong_market/constants/common_size.dart';
 import 'package:gidong_market/data/address_model.dart';
 import 'package:gidong_market/start/address_service.dart';
 import 'package:gidong_market/utils/logger.dart';
+import 'package:location/location.dart';
 
 class AddressPage extends StatefulWidget {
   AddressPage({Key? key}) : super(key: key);
@@ -47,7 +48,35 @@ class _AddressPageState extends State<AddressPage> {
                     BoxConstraints(minWidth: 24, minHeight: 24)),
           ),
           TextButton.icon(
-            onPressed: () {},
+            onPressed: () async {
+              Location location = new Location();
+
+              bool _serviceEnabled;
+              PermissionStatus _permissionGranted;
+              LocationData _locationData;
+
+              _serviceEnabled = await location.serviceEnabled();
+              if (!_serviceEnabled) {
+                _serviceEnabled = await location.requestService();
+                if (!_serviceEnabled) {
+                  return;
+                }
+              }
+
+              _permissionGranted = await location.hasPermission();
+              if (_permissionGranted == PermissionStatus.denied) {
+                _permissionGranted = await location.requestPermission();
+                if (_permissionGranted != PermissionStatus.granted) {
+                  return;
+                }
+              }
+
+              _locationData = await location.getLocation();
+              loggar.d(_locationData);
+
+              AddressService().findAddressByCoordinate(
+                  lat: _locationData.longitude!, log: _locationData.latitude!);
+            },
             icon: Icon(CupertinoIcons.compass, color: Colors.white, size: 20),
             label: Text(
               "현재 위치로 찾기",
