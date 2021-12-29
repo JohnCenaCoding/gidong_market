@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_multi_formatter/flutter_multi_formatter.dart';
 import 'package:gidong_market/constants/common_size.dart';
 import 'package:gidong_market/states/user_provider.dart';
+import 'package:gidong_market/utils/logger.dart';
 import 'package:provider/src/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthPage extends StatefulWidget {
   AuthPage({Key? key}) : super(key: key);
@@ -92,6 +94,7 @@ class _AuthPageState extends State<AuthPage> {
                           children: [
                             TextButton(
                               onPressed: () {
+                                // _getAddress();
                                 if (_formKey.currentState != null) {
                                   bool passed =
                                       _formKey.currentState!.validate();
@@ -204,6 +207,12 @@ class _AuthPageState extends State<AuthPage> {
 
     //notify 해주는 함수를 부를 때는 무조건 read로 해줘야 한다. 안그러면 무한 루프를 돌게 된다.
     context.read<UserProvider>().setUserAuth(true);
+  }
+
+  _getAddress() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String address = prefs.getString('address') ?? "";
+    loggar.d('Address from shared pref - $address');
   }
 }
 

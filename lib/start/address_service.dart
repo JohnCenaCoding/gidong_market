@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:gidong_market/constants/keys.dart';
 import 'package:gidong_market/data/address_model.dart';
+import 'package:gidong_market/data/address_model2.dart';
 import 'package:gidong_market/utils/logger.dart';
 
 class AddressService {
@@ -32,7 +33,7 @@ class AddressService {
     return addressModel;
   }
 
-  Future<void> findAddressByCoordinate(
+  Future<List<AddressModel2>> findAddressByCoordinate(
       {required double log, required double lat}) async {
     final List<Map<String, dynamic>> formDatas = <Map<String, dynamic>>[];
 
@@ -72,6 +73,8 @@ class AddressService {
       'point': '$log,${lat + 0.01}',
     });
 
+    List<AddressModel2> addresses = [];
+
     for (Map<String, dynamic> formData in formDatas) {
       final response = await Dio()
           .get('http://api.vworld.kr/req/address', queryParameters: formData)
@@ -79,9 +82,12 @@ class AddressService {
         loggar.e(e.message);
       });
 
-      loggar.d(response);
+      AddressModel2 addressModel =
+          AddressModel2.fromJson(response.data['response']);
+
+      if (response.data['status'] == 'OK') addresses.add(addressModel);
     }
 
-    return;
+    return addresses;
   }
 }

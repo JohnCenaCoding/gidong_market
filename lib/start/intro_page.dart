@@ -7,8 +7,7 @@ import 'package:gidong_market/utils/logger.dart';
 import 'package:provider/provider.dart';
 
 class IntroPage extends StatelessWidget {
-  PageController controller;
-  IntroPage(this.controller, {Key? key}) : super(key: key);
+  IntroPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -67,7 +66,12 @@ class IntroPage extends StatelessWidget {
                   children: [
                     TextButton(
                       onPressed: () async {
-                        onButtonClick;
+                        context.read<PageController>().animateToPage(
+                              1,
+                              duration: Duration(milliseconds: 500),
+                              curve: Curves.ease,
+                            );
+                        loggar.d('on text BUtton clicked!!');
                       },
                       child: Text(
                         "부대원 증명하고 시작하기",
@@ -84,14 +88,5 @@ class IntroPage extends StatelessWidget {
         );
       },
     );
-  }
-
-  void onButtonClick() {
-    controller.animateToPage(
-      1,
-      duration: Duration(milliseconds: 500),
-      curve: Curves.ease,
-    );
-    loggar.d('on text BUtton clicked!!');
   }
 }

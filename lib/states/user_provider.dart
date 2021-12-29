@@ -2,7 +2,7 @@ import 'package:flutter/widgets.dart';
 
 class UserProvider extends ChangeNotifier {
   //글로벌로 선언하면 notifyListenrners를 안거치고 막 변경할 수 있으니까 private로 선언.
-  bool _userLoggedIN = false;
+  bool _userLoggedIN = true;
 
   void setUserAuth(bool authState) {
     _userLoggedIN = authState;

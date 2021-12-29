@@ -36,8 +36,8 @@ final _routerDelegate = BeamerDelegate(
 
 void main() {
   HttpOverrides.global = MyHttpOverrides();
-
   loggar.d("My first log by loggar");
+  Provider.debugCheckInvalidValueType = null;
   runApp(const MyApp());
 }
 
@@ -82,27 +82,34 @@ class TomatoApp extends StatelessWidget {
       },
       child: MaterialApp.router(
         theme: ThemeData(
-          primarySwatch: Colors.red,
-          fontFamily: 'DoHyeon',
-          hintColor: Colors.grey[350],
-          textTheme: TextTheme(
-            button: TextStyle(color: Colors.white),
-          ),
-          textButtonTheme: TextButtonThemeData(
-            style: TextButton.styleFrom(
-              backgroundColor: Colors.red,
-              primary: Colors.white,
-              minimumSize: Size(48, 48),
+            primarySwatch: Colors.red,
+            fontFamily: 'DoHyeon',
+            hintColor: Colors.grey[350],
+            textTheme: TextTheme(
+              button: TextStyle(color: Colors.white),
+              subtitle1: TextStyle(color: Colors.black87, fontSize: 15),
+              subtitle2: TextStyle(color: Colors.grey, fontSize: 13),
             ),
-          ),
-          appBarTheme: AppBarTheme(
-            backgroundColor: Colors.white,
-            titleTextStyle: TextStyle(color: Colors.black87),
-            elevation: 2,
-            actionsIconTheme: IconThemeData(color: Colors.black87),
-          ),
-          //전체 텍스트 버튼에 스타일 입히기
-        ),
+            textButtonTheme: TextButtonThemeData(
+              style: TextButton.styleFrom(
+                backgroundColor: Colors.red,
+                primary: Colors.white,
+                minimumSize: Size(48, 48),
+              ),
+            ),
+            appBarTheme: AppBarTheme(
+              backgroundColor: Colors.white,
+              elevation: 2,
+              titleTextStyle:
+                  TextStyle(color: Colors.black87, fontFamily: 'DoHyeon'),
+              actionsIconTheme: IconThemeData(color: Colors.black87),
+            ),
+            bottomNavigationBarTheme: BottomNavigationBarThemeData(
+              selectedItemColor: Colors.black87,
+              unselectedItemColor: Colors.black54,
+            )
+            //전체 텍스트 버튼에 스타일 입히기
+            ),
         //beamer가 알아서 route 주소를 읽어서 사용자에게 어떤 스크린을 보여줄지 정하는 것
         routeInformationParser: BeamerParser(),
         //routerDelegate : beamer에게 여기로 보내줘 하면 알아서 가게끔 하는 것
